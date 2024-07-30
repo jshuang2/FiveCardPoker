@@ -5,6 +5,7 @@
 
 typedef struct Deck {
     Card cards[52];
+    int currentSize;
 } Deck;
 
 void setupDeck(Deck* deck);
