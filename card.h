@@ -6,4 +6,6 @@ typedef struct Card {
     char rank;
 } Card;
 
+// add function to print full names for readability
+
 #endif

@@ -8,6 +8,8 @@ typedef struct Deck {
     int currentSize;
 } Deck;
 
+//TODO: do we want to pass a deck as argument or no argument for setupDeck?
+    // see create_deck
 void setupDeck(Deck* deck);
 void shuffleDeck(Deck* deck);
 
