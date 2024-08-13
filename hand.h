@@ -5,7 +5,7 @@
 #include "deck.h"
 
 typedef struct Hand {
-    Card cards[5];
+    Card* cards[5];
 } Hand;
 
 void sort_hand(Hand* hand);

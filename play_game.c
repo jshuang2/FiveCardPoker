@@ -6,10 +6,10 @@
 #include "hand.h"
 
 int main(void) {
-    Deck new_deck = create_deck();
+    Deck* new_deck = create_deck();
     print_deck(&new_deck);  // Pass pointer to print_deck
 
-    Card dealt_card = deal_card(&new_deck);
+    Card* dealt_card = deal_card(&new_deck);
     printf("\nDealt card:\n");
     print_card(&dealt_card);  // Corrected to pass pointer
 

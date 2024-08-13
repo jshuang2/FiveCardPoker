@@ -5,11 +5,11 @@
 #include "deck.h"
 
 typedef struct GameController {
-    Player players[2];
-    Deck deck;
+    Player* players[2];
+    Deck* deck;
     int currentPot;
     int lastBet;
-    int currentTurn;
+    Player* currentTurn;
 } GameController;
 
 void initialize_game(GameController* gameController);
