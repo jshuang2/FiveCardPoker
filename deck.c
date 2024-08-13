@@ -22,7 +22,7 @@ Deck* create_deck() {
         }
     }
     new_deck->currentSize = MAX_DECK_SIZE;
-    shuffle(&new_deck);
+    shuffle(new_deck);
     return new_deck;
 }
 
