@@ -9,7 +9,7 @@ static const int NUM_RANKS = 13;
 static const char SUITS[] = {'C', 'D', 'H', 'S'};
 static const int RANKS[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
-
+// creates a new shuffled 52 card deck
 Deck* create_deck() {
     Deck* new_deck;
     int card_index = 0;
@@ -26,6 +26,7 @@ Deck* create_deck() {
     return new_deck;
 }
 
+// shuffles the deck
 void shuffle(Deck *deck) {
     srand(time(NULL));
     for (int i = 0; i < deck->currentSize; ++i) {
@@ -36,6 +37,7 @@ void shuffle(Deck *deck) {
     }
 }
 
+// pops one card from the top of the deck
 Card* deal_card(Deck *deck) {
     Card* dealt_card = deck->cards[0];
 
@@ -47,6 +49,7 @@ Card* deal_card(Deck *deck) {
     return dealt_card;
 }
 
+// prints the contents of the deck (debugging)
 void print_deck(Deck *deck) {
     for (int i = 0; i < deck->currentSize; ++i) {
         print_card(deck->cards[i]);
