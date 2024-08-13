@@ -109,6 +109,10 @@ int findPairs(Hand * hand) {
     return 1; // if no matches found return 1
 }
 
-void exchange_cards(Hand *hand, Card cardsToExchange[], Deck *deck) {
 
+// exchanges a specified number of player cards at specified indexes in the hand
+void exchange_cards(Hand *hand, Deck *deck, int indexes[], int num_cards) {
+    for (int i = 0; i < num_cards; ++i) {
+        hand -> cards[indexes[i]] = deal_card(deck);
+    }
 }
