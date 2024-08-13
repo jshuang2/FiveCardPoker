@@ -3,9 +3,9 @@
 
 typedef struct Card {
     char suit;
-    char rank;
+    int rank;
 } Card;
 
-// add function to print full names for readability
+void print_card(Card* card);
 
 #endif
