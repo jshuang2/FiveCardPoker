@@ -5,11 +5,11 @@
 #include "deck.h"
 
 typedef struct Hand {
-    Card hand[5];
+    Card* cards[5];
 } Hand;
 
-void sortHand(Hand* hand);
-void exchangeCards(Hand* hand, Card cardsToExchange[], Deck* deck);
-void evaluateHand(Hand* hand);
+void sort_hand(Hand* hand);
+void exchange_cards(Hand* hand, Card cardsToExchange[], Deck* deck);
+void evaluate_hand(Hand* hand);
 
 #endif
