@@ -19,7 +19,6 @@ int main(void) {
 
 
 
-
 /*
 TODO next steps:
     - finalize deal_card & shuffle methods
