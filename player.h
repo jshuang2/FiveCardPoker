@@ -8,9 +8,10 @@ typedef struct Player {
     Hand* hand;
     int numChips;
     bool isHuman;
+    bool called;
 } Player;
 
 void print_player_hand(Player* player);
-int make_bet(Player* player, int currentBet);
+int computer_make_bet(Player* player, int currentBet, GameController* gc);
 
 #endif

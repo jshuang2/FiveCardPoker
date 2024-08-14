@@ -10,6 +10,6 @@ typedef struct Hand {
 
 void sort_hand(Hand* hand);
 void exchange_cards(Hand* hand, Card cardsToExchange[], Deck* deck);
-void evaluate_hand(Hand* hand);
+int evaluate_hand(Hand* hand);
 
 #endif
