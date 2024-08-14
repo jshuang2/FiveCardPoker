@@ -15,9 +15,9 @@ int findPairs(Hand * hand);
 
 // sorts hand by rank using bubble sort
 void sort_hand(Hand *hand) {
-    for (int i = 0; i < 5; ++i) {
-        for (int j = 0; i < 4; ++j) {
-            if (hand -> cards[j] > hand -> cards[j + 1]) {
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5 - i - 1; j++) {
+            if ((hand -> cards[j] -> rank) < (hand -> cards[j + 1] -> rank)) {
                 struct Card* temp = hand -> cards[j];
                 hand -> cards[j] = hand -> cards[j + 1];
                 hand -> cards[j + 1] = temp;
@@ -63,7 +63,7 @@ int isFlush(Hand *hand) {
 int isStraight(Hand * hand) {
     int consecutive = 1;
     for(int i = 0; i < 4; ++i) {
-        if ((hand -> cards[i] -> rank) - (hand -> cards[i + 1] -> rank  == 1)) {
+        if ((hand -> cards[i] -> rank) - (hand -> cards[i + 1] -> rank)  == 1) {
             ++consecutive; 
         }
     }
@@ -73,7 +73,7 @@ int isStraight(Hand * hand) {
 // helper method for evaluate hand
 // determines if a hand contains: a single pair, two pair, full house, or 4 of a kind
 int findPairs(Hand * hand) {
-    struct Map rank_map[13] = {0};
+    struct Map rank_map[14] = {0};
 
     // add ranks to map w/ count of how many of each rank in hand
     for (int i = 0; i < 5; ++i) {
@@ -118,4 +118,13 @@ void exchange_cards(Hand *hand, Deck *deck, int indexes[], int num_cards) {
         hand -> cards[indexes[i]] = deal_card(deck);
     }
     sort_hand(hand);
+}
+
+void print_hand(Hand* hand) {
+    sort_hand(hand);
+    printf("\n");
+    for (int i = 0; i < 5; i++) {
+        print_card(hand -> cards[i]);
+    }
+    printf("\n");
 }

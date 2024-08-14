@@ -16,7 +16,9 @@ GameController* controller;
 
 Player* create_player(bool isHuman) {
     Player* newPlayer = (Player*)malloc(sizeof(Player));
+    Hand* newHand = (Hand*)malloc(sizeof(Hand));
 
+    newPlayer->hand = newHand;
     newPlayer->isHuman = isHuman;
     newPlayer->numChips = startingChips;
     newPlayer->called = false;
@@ -54,7 +56,7 @@ void deal_starting_cards() {
         humanPlayer->hand->cards[i] = deal_card(controller->deck);
         computerPlayer->hand->cards[i] = deal_card(controller->deck);
     }
-
+    print_hand(humanPlayer -> hand);
     play_betting_round();
 }
 
@@ -81,7 +83,7 @@ void play_betting_round() {
                     printf("How much would you like to bet? You have %d chips.\n", currentPlayer->numChips);
                     scanf("%d", &bet);
 
-                    if (bet > currentPlayer->numChips || bet <= currentBet) {
+                    if (bet > currentPlayer->numChips || bet <= currentBet || bet > computerPlayer -> numChips) {
                         printf("Invalid bet. You must bet more than the current bet of %d and within your chips.\n", currentBet);
                     } else {
                         currentPlayer->numChips -= bet;
@@ -123,23 +125,30 @@ void play_betting_round() {
             
             printf("Computer player's turn.\n");
             // adjust game as necessary given computers bet
-            if (currentPlayer -> numChips >= currentBet) {
+            if (computerPlayer -> numChips >= currentBet) {
                 int computer_bet = computer_make_bet(currentPlayer, currentBet, controller->currentPot);
+                if (computer_bet > humanPlayer -> numChips) {
+                    computer_bet = currentBet;
+                }
                 if (computer_bet == -1) {  // if computer folds print message, distribute chips, end round
-                    printf("Computer player folded");
+                    printf("Computer player folded\n");
                     distribute_chips(controller -> players[0]);
                     currentBet = 0;
                     roundOver = true;
                     return;
-                } else if (computer_bet == controller -> lastBet) {  // if computer calls
-                    (currentPlayer -> numChips) -= computer_bet;
+                } else if (computer_bet < -1) {
+                    computer_bet = currentBet;
+                }
+                else if (computer_bet == controller -> lastBet) {  // if computer calls
+                    (computerPlayer -> numChips) -= computer_bet;
                     (controller -> currentPot) += computer_bet;
                     computerPlayer -> called = true;
                     printf("Computer player called\n");
+                    roundOver = true;
                 }
                 else {  // if computer raises
                     printf("the computer player raised by %d chips\n", computer_bet - (controller -> lastBet));
-                    (currentPlayer -> numChips) -= computer_bet;
+                    (computerPlayer -> numChips) -= computer_bet;
                     currentBet = computer_bet;
                     (controller -> currentPot) += computer_bet;
                     controller -> lastBet = computer_bet;
@@ -184,7 +193,9 @@ void play_betting_round() {
     }
     else {  //TODO: add logic to incorporate computer exchanging cards in this sectino or play_exchange_cards
         controller->bettingRound = 2;
+        print_hand(humanPlayer -> hand);
         play_exchange_cards();
+        print_hand(humanPlayer -> hand);
         computer_exchange_cards(computerPlayer, controller->deck);
         play_betting_round();
     }
@@ -195,14 +206,15 @@ void distribute_chips(Player* player) {
     player->numChips += controller->currentPot;
 
     if (player->isHuman) {
-        printf("You have won the round. %d chips have been added to your stack. You have %d chips.\n", controller->currentPot, humanPlayer->numChips);
+        printf("You have won the hand. %d chips have been added to your stack. You have %d chips.\n", controller->currentPot, humanPlayer->numChips);
     }
     else {
-        printf("The AI has won the round. %d chips have been added to their stack. You have %d chips.\n", controller->currentPot, humanPlayer->numChips);
+        printf("The AI has won the hand. %d chips have been added to their stack. You have %d chips.\n", controller->currentPot, humanPlayer->numChips);
+        printf("AI hand: ");
+        print_hand(computerPlayer -> hand);
     }
 
     controller->currentPot = 0;
-    deal_starting_cards();
 }
 
 void play_exchange_cards() {
@@ -212,7 +224,7 @@ void play_exchange_cards() {
     bool flag = true;
     char* yesOrNo = NULL;
     bool exchanged = false;
-
+    yesOrNo = malloc(4 * sizeof(char));
 
     while (flag) {
 
@@ -240,6 +252,7 @@ void play_exchange_cards() {
         exchange_cards(humanPlayer->hand, controller->deck, indexes, numberOfCards);
     }
 
+    free(yesOrNo);
 };
 
 void play_showdown() {
@@ -269,13 +282,15 @@ void play_showdown() {
         end_game(humanPlayer);
     }
     else {
-        play_betting_round();
+        controller -> deck = create_deck();
+        deal_starting_cards();
     }
 
 }
 
 void free_player(Player* player) {
     if (player != NULL) {
+        free(player -> hand);
         free(player);
     }
 }

@@ -11,13 +11,15 @@ static const int RANKS[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
 
 Deck* create_deck() {
-    Deck* new_deck = NULL;
+    Deck* new_deck = (Deck*) malloc(sizeof(Deck));
     int card_index = 0;
 
     for (int i = 0; i < NUM_SUITS; ++i) {
         for (int j = 0; j < NUM_RANKS; ++j) {
-            new_deck->cards[card_index]->suit = SUITS[i];
-            new_deck->cards[card_index]->rank = RANKS[j];
+            Card* new_card = (Card*) malloc(sizeof(Card));
+            new_card -> suit = SUITS[i];
+            new_card -> rank = RANKS[j];
+            new_deck->cards[card_index] = new_card;
             card_index++;
         }
     }
