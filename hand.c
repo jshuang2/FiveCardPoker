@@ -117,5 +117,5 @@ void exchange_cards(Hand *hand, Deck *deck, int indexes[], int num_cards) {
     for (int i = 0; i < num_cards; ++i) {
         hand -> cards[indexes[i]] = deal_card(deck);
     }
-    sort_hand(hand);  // ADDED
+    sort_hand(hand);
 }

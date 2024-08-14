@@ -186,6 +186,8 @@ void play_betting_round() {
     else {  //TODO: add logic to incorporate computer exchanging cards in this sectino or play_exchange_cards
         controller->bettingRound = 2;
         play_exchange_cards();
+        computer_exchange_cards(computerPlayer, controller->deck);
+        play_betting_round();
     }
 }
 
@@ -204,8 +206,42 @@ void distribute_chips(Player* player) {
     deal_starting_cards();
 }
 
-// TODO: finish implementing this method
-void play_exchange_cards();
+void play_exchange_cards() {
+
+    int indexes[5];
+    int numberOfCards = 0;
+    bool flag = true;
+    char* yesOrNo = NULL;
+    bool exchanged = false;
+
+
+    while (flag) {
+
+        printf("Would you like to exchange a card? Enter 'yes' or 'no'.\n");
+        scanf("%s", &yesOrNo);
+
+        if (strcmp(yesOrNo, "yes") != 0) {
+            flag = false;
+            break;
+        }
+
+        printf("Enter the card number from left to right [1-5] or type '0' if you're done.\n");
+
+        int index = 0;
+        scanf("%d", &index);
+
+        if (index == 0) break;
+        if (index >= 1 && index <= 5) {
+            indexes[numberOfCards++] = --index;
+            exchanged = true;
+        }
+    }
+
+    if (exchanged) {
+        exchange_cards(humanPlayer->hand, controller->deck, indexes, numberOfCards);
+    }
+
+};
 
 void play_showdown() {
 
