@@ -19,7 +19,7 @@ Rules of Five Card Poker can be found here: https://www.wikihow.com/Play-Five-Ca
 
 ## Challenges:
 
-One of our biggest challenges was the implementation of the hand-grading algorithm. We wanted the AI opponent to make intelligent decisions when deciding if they should exchange cards, so we integrated various variables into the algorithm such as pot odds, equity, and expected value.
+One of our biggest challenges was the implementation of the hand-grading algorithm. We wanted the AI opponent to make intelligent decisions when deciding if they should exchange cards, so we integrated various variables into the algorithm such as pot odds, and expected value.
 
 Another challenge we faced was ensuring that all game components worked together seamlessly. We encountered multiple bugs that were sometimes difficult to track down.
 
