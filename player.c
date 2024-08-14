@@ -14,6 +14,7 @@ void print_player_hand(Player* player){
 }
 
 // TODO, may need to be moved to game controller or play game
+// TODO, may need to check if computer player has more chips than 2x current bet
 // handles bet making for computer player
 int computer_make_bet(Player* player, int currentBet, GameController* gc) {
     
@@ -103,10 +104,74 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
 void computer_exchange_cards(Player* player, Deck* deck) {
     
     int hand_strength = evaluate_hand(player -> hand);
+    int exchange_indexes[5];
+    int num_to_exchange = 0;
 
     if (hand_strength >= 5) {
+        // if straight or better don't exchange cards
         return;
-    } else if (hand_strength == 4) {
-        
-    }
+    } else {
+        if (hand_strength == 4) {
+        // exchange 2 cards not in set
+            num_to_exchange = 2;
+            for (int i = 0; i < 3; i++) {
+                if (player -> hand -> cards[i] -> rank == player -> hand -> cards[i + 1] -> rank
+                    && player -> hand -> cards[i + 1] -> rank == player -> hand -> cards[i + 2] -> rank) {
+                        if (i == 0) { // if i = 0, first three cards in set, exchange indexes = 3 & 4
+                            exchange_indexes[0] = 3;
+                            exchange_indexes[1] = 4;
+                        } else if (i == 1) { // if i = 1, middle three cards in set, exchange indexes = 0 & 4
+                            exchange_indexes[0] = 0;
+                            exchange_indexes[1] = 4;
+                        } else if (i == 2) { // if i = 2, last three cards in set, exchange indexes = 0 & 1
+                            exchange_indexes[0] = 0;
+                            exchange_indexes[1] = 1;
+                        }
+                    break; // end loop after finding set
+                }
+            }
+        } else if (hand_strength == 3) {
+        // exchange 1 card not in either pair
+            num_to_exchange = 1;
+            for (int i = 1; i < 4; i++) { 
+                if (!(player -> hand -> cards[i] -> rank == player -> hand -> cards[i - 1] -> rank)
+                    && !(player -> hand -> cards[i] -> rank == player -> hand -> cards[i + 1] -> rank)) {
+                        // if card @ index i does not match card to either side it's not in either pair
+                        exchange_indexes[0] = i;
+                    }
+            }
+        } else if (hand_strength == 2) {
+        // exchange 3 cards not in pair
+            num_to_exchange = 3; 
+            for (int i = 0; i < 4; i++) {
+                if (player -> hand -> cards[i] -> rank == player -> hand -> cards[i + 1] -> rank) {
+                    if (i == 0) { // if i = 0, pair @ 0 & 1
+                        exchange_indexes[0] = 2;
+                        exchange_indexes[1] = 3;
+                        exchange_indexes[2] = 4;
+                    } else if (i == 1) { // if i = 1, pair @ 1 & 2
+                        exchange_indexes[0] = 0;
+                        exchange_indexes[1] = 3;
+                        exchange_indexes[2] = 4;
+                    } else if (i == 2) { // if i = 2, pair @ 2 & 3
+                        exchange_indexes[0] = 0;
+                        exchange_indexes[1] = 1;
+                        exchange_indexes[2] = 4;
+                    } else if (i == 3) { // if i = 3, pair @ 3 & 4
+                        exchange_indexes[0] = 0;
+                        exchange_indexes[1] = 1;
+                        exchange_indexes[2] = 2;
+                    }
+                    break;
+                }
+            }
+        } else {
+            // exchange all cards except highest card
+            num_to_exchange = 4;
+            for (int i = 1; i < 5; i++) {
+                exchange_indexes[i - 1] = i;
+            }
+        }
+        exchange_cards(player -> hand, deck, exchange_indexes, num_to_exchange);
+    }   
 }

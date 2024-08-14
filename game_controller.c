@@ -254,7 +254,7 @@ void play_showdown() {
     else if (computerHandEval > humanHandEval) {
         distribute_chips(computerPlayer);
     }
-    else {
+    else {  //TODO: this is not be ideal logic, but probably works for now
         if (humanPlayer->hand->cards[0]->rank > computerPlayer->hand->cards[0]->rank) {
             distribute_chips(humanPlayer);
         }
