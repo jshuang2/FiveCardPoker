@@ -5,6 +5,7 @@
 #include <time.h>
 #include "game_controller.h"
 #include "hand.h"
+#include <stdbool.h>
 
 // prints all cards in a player's hand
 void print_player_hand(Player* player){
@@ -29,7 +30,11 @@ int computer_make_bet(Player* player, int currentBet, int currentPot) {
     double expected_value = (win_probability * currentPot) - (loss_probability * currentBet);
 
     //incorporate some level of randomness
-    srand(time(0));
+    static bool seeded = false;
+    if (!seeded) {
+        srand(time(0));
+        seeded = true;
+    }
     int random_number = (rand() % 3) + 1;  // generate a random number either 1, 2 or 3
 
     // incorporate expevted value & pot odds to make intelligent computer bet
