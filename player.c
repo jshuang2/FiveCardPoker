@@ -14,6 +14,7 @@ void print_player_hand(Player* player){
 }
 
 // TODO, may need to be moved to game controller or play game
+// TODO, may need to check if computer player has more chips than 2x current bet
 // handles bet making for computer player
 int computer_make_bet(Player* player, int currentBet, GameController* gc) {
     
