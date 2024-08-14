@@ -11,7 +11,7 @@ static const int RANKS[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
 
 Deck* create_deck() {
-    Deck* new_deck;
+    Deck* new_deck = NULL;
     int card_index = 0;
 
     for (int i = 0; i < NUM_SUITS; ++i) {
@@ -22,7 +22,7 @@ Deck* create_deck() {
         }
     }
     new_deck->currentSize = MAX_DECK_SIZE;
-    shuffle(&new_deck);
+    shuffle(new_deck);
     return new_deck;
 }
 
