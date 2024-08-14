@@ -9,14 +9,16 @@ typedef struct GameController {
     Deck* deck;
     int currentPot;
     int lastBet;
-    Player* currentTurn;
+    int bettingRound;
+    Player* currentPlayer;
+    Player* nextPlayer;
 } GameController;
 
 void initialize_game(GameController* gameController);
-void play_betting_round(GameController* gameController);
-void play_exchange_cards(GameController* GameController, Player* player);
-void play_showdown(GameController* gameController);
-void determine_winner(GameController* gameController);
+void play_betting_round();
+void play_exchange_cards();
+void play_showdown();
+// void determine_winner(GameController* gameController);
 // void reset_game(GameController* gameController);
 
 #endif

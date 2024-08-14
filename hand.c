@@ -6,7 +6,7 @@ void sort_hand(Hand *hand) {
 
 }
 
-void evaluate_hand(Hand *hand) {
+int evaluate_hand(Hand *hand) {
 
 }
 
