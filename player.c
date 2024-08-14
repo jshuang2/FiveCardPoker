@@ -100,7 +100,7 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
     } else return currentBet;
 }
 
-void computer_exchange_cards(Player* player) {
+void computer_exchange_cards(Player* player, Deck* deck) {
     
     int hand_strength = evaluate_hand(player -> hand);
 
