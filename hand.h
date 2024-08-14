@@ -9,7 +9,7 @@ typedef struct Hand {
 } Hand;
 
 void sort_hand(Hand* hand);
-void exchange_cards(Hand* hand, Card cardsToExchange[], Deck* deck);
+void exchange_cards(Hand* hand, Deck* deck, int indexes[], int num_cards);
 int evaluate_hand(Hand* hand);
 
 #endif
