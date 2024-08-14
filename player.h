@@ -9,6 +9,7 @@ typedef struct Player {
     Hand* hand;
     int numChips;
     bool isHuman;
+    bool called;
 } Player;
 
 void print_player_hand(Player* player);
