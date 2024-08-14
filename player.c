@@ -16,17 +16,17 @@ void print_player_hand(Player* player){
 // TODO, may need to be moved to game controller or play game
 // TODO, may need to check if computer player has more chips than 2x current bet
 // handles bet making for computer player
-int computer_make_bet(Player* player, int currentBet, GameController* gc) {
+int computer_make_bet(Player* player, int currentBet, int currentPot) {
     
     int hand_strength = evaluate_hand(player -> hand); // get hand strength
 
-    double pot_odds = (double) currentBet / (gc-> currentPot + currentBet); // get pot odds
+    double pot_odds = (double) currentBet / (currentPot + currentBet); // get pot odds
 
     double win_probability = (double) hand_strength / 9;      // get simple win probaility
     double loss_probability = 1 - win_probability;            // get simple loss probability
 
     // get expected value = (win probability * winnings) - (loss probability * losses aka bet amount)
-    double expected_value = (win_probability * gc -> currentPot) - (loss_probability * currentBet);
+    double expected_value = (win_probability * currentPot) - (loss_probability * currentBet);
 
     //incorporate some level of randomness
     srand(time(0));

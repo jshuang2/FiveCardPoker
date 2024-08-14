@@ -1,18 +1,17 @@
 
 #include "game_controller.h"
-#include "player.c"
-#include "deck.c"
+#include "player.h"
+#include "deck.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 const int startingChips = 100;
 const int startingPot = 0;
 Player* humanPlayer;
 Player* computerPlayer;
 GameController* controller;
-
-void distribute_chips(Player* player);
-void end_game(Player* winner);
 
 
 Player* create_player(bool isHuman) {
@@ -37,7 +36,7 @@ GameController* create_controller() {
     return newController;
 }
 
-void initialize_game(GameController* gameController) {
+void initialize_game() {
     humanPlayer = create_player(true);
     computerPlayer = create_player(false);
 
@@ -125,7 +124,7 @@ void play_betting_round() {
             printf("Computer player's turn.\n");
             // adjust game as necessary given computers bet
             if (currentPlayer -> numChips >= currentBet) {
-                int computer_bet = computer_make_bet(currentPlayer, currentBet, controller);
+                int computer_bet = computer_make_bet(currentPlayer, currentBet, controller->currentPot);
                 if (computer_bet == -1) {  // if computer folds print message, distribute chips, end round
                     printf("Computer player folded");
                     distribute_chips(controller -> players[0]);
@@ -218,7 +217,7 @@ void play_exchange_cards() {
     while (flag) {
 
         printf("Would you like to exchange a card? Enter 'yes' or 'no'.\n");
-        scanf("%s", &yesOrNo);
+        scanf("%s", yesOrNo);
 
         if (strcmp(yesOrNo, "yes") != 0) {
             flag = false;
