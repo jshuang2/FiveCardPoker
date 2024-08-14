@@ -103,4 +103,10 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
 void computer_exchange_cards(Player* player) {
     
     int hand_strength = evaluate_hand(player -> hand);
+
+    if (hand_strength >= 5) {
+        return;
+    } else if (hand_strength == 4) {
+        
+    }
 }
