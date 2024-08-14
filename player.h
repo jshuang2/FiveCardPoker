@@ -13,5 +13,6 @@ typedef struct Player {
 
 void print_player_hand(Player* player);
 int computer_make_bet(Player* player, int currentBet, GameController* gc);
+void computer_exchange_cards(Player* player);
 
 #endif

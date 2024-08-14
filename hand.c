@@ -30,6 +30,8 @@ void sort_hand(Hand *hand) {
 // returns an integer value representing the hands strength
 int evaluate_hand(Hand *hand) {
 
+    sort_hand(hand);
+
     if (isFlush(hand) && isStraight(hand))
         return 9;
     else {

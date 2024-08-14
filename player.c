@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "game_controller.h"
+#include "hand.h"
 
 // prints all cards in a player's hand
 void print_player_hand(Player* player){
@@ -97,4 +98,9 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
                 break;
         }
     } else return currentBet;
+}
+
+void computer_exchange_cards(Player* player) {
+    
+    int hand_strength = evaluate_hand(player -> hand);
 }
