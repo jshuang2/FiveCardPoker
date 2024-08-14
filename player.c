@@ -44,7 +44,7 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
                 return -1;
                 break;
             default:
-                return -1;
+                return currentBet;
                 break;
         }
     }
@@ -78,6 +78,7 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
                 break;
             default:
                 return currentBet;
+                break;
         }
     // if expected value is positive use random number to decide how much to bet (emphasize raise)
     } else if (expected_value >= 0) {
@@ -93,6 +94,7 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
                 break;
             default:
                 return currentBet;
+                break;
         }
     } else return currentBet;
 }
