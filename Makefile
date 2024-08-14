@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -std=c11
 TARGET = poker_game
 
 # Source files
-SRCS = play_game.c deck.c hand.c card.c human.c computer.c game_controller.c player.c
+SRCS = play_game.c deck.c hand.c card.c game_controller.c player.c
 
 # Object files (derived from source files)
 OBJS = $(SRCS:.c=.o)
