@@ -12,6 +12,7 @@ void print_player_hand(Player* player){
     }
 }
 
+// TODO, may need to be moved to game controller or play game
 // handles bet making for computer player
 int computer_make_bet(Player* player, int currentBet, GameController* gc) {
     
@@ -30,7 +31,6 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
     int random_number = (rand() % 3) + 1;  // generate a random number either 1, 2 or 3
 
     // incorporate expevted value & pot odds to make intelligent computer bet
-
     // if expected value is negative & pot odds are high fold or call (emphasize fold)
     if (expected_value < 0 && pot_odds >= .67) {
         switch(random_number) {
@@ -48,7 +48,6 @@ int computer_make_bet(Player* player, int currentBet, GameController* gc) {
                 break;
         }
     }
-
     // if expected value is negative & pot odds are moderate use random number to decide b/w call, fold (empahsize call)
     else if (expected_value < 0 && pot_odds > .33 && pot_odds < .67) {
         switch (random_number) {
