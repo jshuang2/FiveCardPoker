@@ -3,6 +3,7 @@
 
 #include "hand.h"
 #include <stdbool.h>
+#include "game_controller.h"
 
 typedef struct Player {
     Hand* hand;
@@ -11,6 +12,6 @@ typedef struct Player {
 } Player;
 
 void print_player_hand(Player* player);
-int make_bet(Player* player, int currentBet);
+int computer_make_bet(Player* player, int currentBet, GameController* gc);
 
 #endif
