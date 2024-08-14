@@ -11,6 +11,9 @@ Player* humanPlayer;
 Player* computerPlayer;
 GameController* controller;
 
+void distribute_chips(Player* player);
+void end_game(Player* winner);
+
 
 Player* create_player(bool isHuman) {
     Player* newPlayer = (Player*)malloc(sizeof(Player));
@@ -92,14 +95,14 @@ void play_betting_round() {
                         computerPlayer->called = false;
                     }
                     break;
-                }
-                case 2: {
+                } 
+                case 2: {  // TODO: could be problematic, may need to implement logic to limit bet size to other player's number of chips
                     if (currentPlayer->numChips >= currentBet) {
                         currentPlayer->numChips -= currentBet;
                         controller->currentPot += currentBet;
                         humanPlayer->called = true;
                     } else {
-                        printf("You don't have enough chips to call.\n");
+                        printf("You don't have enough chips to call.\n");   
                         continue;
                     }
                     break;
@@ -115,9 +118,40 @@ void play_betting_round() {
                     printf("Invalid action. Try again.\n");
                     continue;
             }
-        } else {
+        } else {  //TODO: implement computer player methods
             // Computer player's turn
-            // Simple AI: Always calls
+
+            
+            printf("Computer player's turn.\n");
+            // adjust game as necessary given computers bet
+            if (currentPlayer -> numChips >= currentBet) {
+                int computer_bet = computer_make_bet(currentPlayer, currentBet, controller);
+                if (computer_bet == -1) {  // if computer folds print message, distribute chips, end round
+                    printf("Computer player folded");
+                    distribute_chips(controller -> players[0]);
+                    currentBet = 0;
+                    roundOver = true;
+                    return;
+                } else if (computer_bet == controller -> lastBet) {  // if computer calls
+                    (currentPlayer -> numChips) -= computer_bet;
+                    (controller -> currentPot) += computer_bet;
+                    computerPlayer -> called = true;
+                    printf("Computer player called\n");
+                }
+                else {  // if computer raises
+                    printf("the computer player raised by %d chips\n", computer_bet - (controller -> lastBet));
+                    (currentPlayer -> numChips) -= computer_bet;
+                    currentBet = computer_bet;
+                    (controller -> currentPot) += computer_bet;
+                    controller -> lastBet = computer_bet;
+                    // Reset called status because a new bet was made
+                    humanPlayer->called = false;
+                    computerPlayer->called = false;
+                }
+            }
+
+            
+            /*
             printf("Computer player's turn.\n");
             if (currentPlayer->numChips >= currentBet) {
                 printf("Computer calls.\n");
@@ -131,6 +165,7 @@ void play_betting_round() {
                 currentBet = 0;
                 return;  // End the round early since one player folded
             }
+            */
         }
 
         // Check if both players have called
@@ -148,7 +183,7 @@ void play_betting_round() {
     if (controller->bettingRound == 2) {
         play_showdown();
     }
-    else {
+    else {  //TODO: add logic to incorporate computer exchanging cards in this sectino or play_exchange_cards
         controller->bettingRound = 2;
         play_exchange_cards();
     }
@@ -169,6 +204,7 @@ void distribute_chips(Player* player) {
     deal_starting_cards();
 }
 
+// TODO: finish implementing this method
 void play_exchange_cards();
 
 void play_showdown() {
@@ -182,7 +218,7 @@ void play_showdown() {
     else if (computerHandEval > humanHandEval) {
         distribute_chips(computerPlayer);
     }
-    else {
+    else {  //TODO: this is not be ideal logic, but probably works for now
         if (humanPlayer->hand->cards[0]->rank > computerPlayer->hand->cards[0]->rank) {
             distribute_chips(humanPlayer);
         }
