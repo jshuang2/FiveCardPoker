@@ -26,9 +26,9 @@ Another challenge we faced was ensuring that all game components worked together
 
 ## How to Use:
 
-If the program is not already compiled, execute the Makefile by entering 'make' into the command line. If you have a Windows machine, you may have to install Makefile before using it.
+If the program is not already compiled, compile the program by entering `make` into the command line. If you have a Windows machine, you may have to install Makefile before using it. To recompile, you must first enter `make clean` to delete the previous compilation before then entering the `make` command again.
 
-If the program is compiled, enter ./poker_game into the terminal to begin the game.
+Once the program is compiled, enter `./poker_game` into the terminal to begin the game.
 
 ## Conclusion and Future Considerations:
 
